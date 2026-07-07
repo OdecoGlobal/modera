@@ -24,7 +24,7 @@ const CopyText = ({
   };
   return (
     <div
-      className="flex items-center space-x-2 cursor-pointer  w-fit "
+      className="flex items-center space-x-2 cursor-pointer"
       onClick={handleCopy}
     >
       <span className={cn('text-sm flex-1', className)}>{text}</span>

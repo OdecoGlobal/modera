@@ -40,7 +40,7 @@ const items = [
   },
   {
     title: 'Developer Setting',
-    href: '/dashboard/merchant/settings/developer',
+    href: '/dashboard/merchant/developer',
     icon: DeviceAccessIcon,
   },
 ];

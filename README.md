@@ -6,12 +6,12 @@ Tokens are valid for 60 minutes. Cache in memory or Redis and refresh at the 55-
 
 > **The infrastructure layer Nigerian fintech forgot to build** — a persistent, identity-bound dedicated virtual account system where every customer gets their own NUBAN-like account number, payments reconcile automatically, and the entire engine is exposed as a clean developer API.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://nomba-dva.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://virtualstack.odeco.dev)
 [![Built with Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org)
 [![Powered by Nomba](https://img.shields.io/badge/Powered%20by-Nomba-0066f6)](https://nomba.com)
 
-**Live Demo:** `https://nomba-dva.vercel.app` ← replace with real URL  
-**GitHub:** `https://github.com/your-username/nomba-dva` ← replace with real URL
+**Live Demo:** `https://virtualstack.odeco.dev`
+**GitHub:** `https://github.com/OdecoGlobal/modera.git`
 
 ---
 
@@ -90,7 +90,7 @@ Anyone sends bank transfer to that number
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/nomba-dva
+git clone https://github.com/OdecoGlobal/modera.git
 cd nomba-dva
 npm install
 ```
@@ -265,7 +265,7 @@ Generate a key from the dashboard or via `POST /api/keys/generate` (requires ses
 ### Base URL
 
 ```
-https://nomba-dva.vercel.app/api/v1
+https://virtualstack.odeco.dev/api/v1
 ```
 
 ---

@@ -71,7 +71,7 @@ const AccountCard = () => {
                 /(\d{4})(\d{3})(\d{3})/,
                 '$1 $2 $3',
               )}
-              className="text-2xl font-mono font-bold"
+              className="text-2xl font-mono font-bold w-fit"
             />
           </div>
         </div>

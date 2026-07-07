@@ -21,7 +21,7 @@ interface VerifyEmailProps {
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
-const APP_NAME = process.env.APP_NAME || 'Nomba Test';
+const APP_NAME = process.env.APP_NAME || 'VirtualStack';
 
 export const VerifyEmail = ({
   userFirstname,

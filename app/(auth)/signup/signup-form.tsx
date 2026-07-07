@@ -30,6 +30,7 @@ import {
 import { Input } from '@/components/ui/input';
 import FormButton from '@/components/custom/form-button';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const SignupForm = ({ callbackUrl }: { callbackUrl?: string }) => {
   const [showPassword, setShowPassword] = useState({
@@ -226,6 +227,15 @@ const SignupForm = ({ callbackUrl }: { callbackUrl?: string }) => {
               >
                 Register
               </FormButton>
+              <p className="text-center">
+                Already have an account yet{' '}
+                <Link
+                  href="/login"
+                  className="text-brand-primary hover:text-brand-primary/75 hover:underline"
+                >
+                  Login Here
+                </Link>
+              </p>
             </div>
           </FieldGroup>
         </form>
