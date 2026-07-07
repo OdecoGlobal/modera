@@ -219,7 +219,7 @@ const SignupForm = ({ callbackUrl }: { callbackUrl?: string }) => {
                 </Field>
               )}
             />
-            <div>
+            <div className="space-y-1.5">
               <FormButton
                 isLoading={form.formState.isSubmitting}
                 // form="register-form"

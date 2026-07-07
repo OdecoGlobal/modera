@@ -22,8 +22,6 @@ const GenerateApiKeyButton = () => {
   function handleGenerate() {
     mutate(undefined, {
       onSuccess(data) {
-        console.log('Data', data);
-
         setNewKey(data.data.key);
       },
     });

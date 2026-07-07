@@ -7,10 +7,8 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import ErrorState from '@/components/custom/states/error-state';
 const getDocs = async () => {
   const res = await fetch('/api/docs', { credentials: 'include' });
-  //   console.log(res);
 
   const data = await res.json();
-  console.log(data);
 
   return data;
 };

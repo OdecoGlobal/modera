@@ -20,7 +20,7 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { APP_LOGO, APP_NAME } from '@/constant';
+import { APP_LOGO } from '@/constant';
 
 import Link from 'next/link';
 import { ComponentProps, useState } from 'react';
@@ -91,7 +91,7 @@ const AppSidebar = ({
 
               <div className="grid flex-1 text-sm leading-tight text-left">
                 <span className="text-sm font-semibold truncate">
-                  {APP_NAME}
+                  VirtualStack
                 </span>
                 <span className="text-xs truncate text-muted-foreground">
                   Dashboard

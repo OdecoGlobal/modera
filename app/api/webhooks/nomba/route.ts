@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
   const signature = req.headers.get('x-nomba-signature');
   let parsedPayload: any;
 
-  // Step 1: Parse JSON
   try {
     parsedPayload = JSON.parse(rawBody);
   } catch {
@@ -46,7 +45,6 @@ export async function POST(req: NextRequest) {
 
   const requestId = parsedPayload?.requestId;
 
-  // Step 2: Reject duplicates early
   if (requestId) {
     const alreadyProcessed = await prisma.webhookLog.findUnique({
       where: { requestId },
@@ -56,7 +54,6 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Step 3: Log raw webhook immediately
   await prisma.webhookLog.create({
     data: {
       requestId: requestId ?? null,
@@ -67,7 +64,6 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  // Step 4: Verify signature
   if (process.env.NOMBA_WEBHOOK_SECRET && signature) {
     const timestamp = parsedPayload?.data?.transaction?.time ?? '';
     const computed = generateSignature(
@@ -81,7 +77,6 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Step 5: Check event type
   const { event_type, data } = parsedPayload;
   const HANDLED_EVENTS = [
     'payment_success',
@@ -111,12 +106,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true }, { status: 200 });
   }
 
-  // Step 7: Find virtual account — could be merchant VA or customer VA
   const va = await prisma.virtualAccount.findUnique({
     where: { accountRef },
   });
 
-  // Step 8: Handle misdirected
   if (!va || va.status === 'closed' || va.status === 'suspended') {
     try {
       await prisma.transaction.create({
@@ -192,7 +185,6 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Step 10: Record successful transaction
   try {
     await prisma.transaction.create({
       data: {
@@ -217,7 +209,6 @@ export async function POST(req: NextRequest) {
     throw err;
   }
 
-  // Step 11: Mark processed
   await prisma.webhookLog.updateMany({
     where: { requestId },
     data: { processed: true, processedAs: 'success' },

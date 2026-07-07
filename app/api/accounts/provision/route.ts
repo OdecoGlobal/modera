@@ -77,7 +77,6 @@ export async function POST(req: NextRequest) {
     );
 
     const nombaData = await nombaRes.json();
-    console.log('Nomba provision response:', nombaData);
 
     if (nombaData.code !== '00') {
       return NextResponse.json(

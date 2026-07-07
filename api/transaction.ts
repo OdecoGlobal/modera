@@ -4,7 +4,7 @@ import { ApiResponse, PaginatedResponse } from '@/types';
 
 export async function getMyTransactions(params?: TransactionQuery) {
   const res = await fetchApi<PaginatedResponse<TransactionType>>(
-    `/accounts/transactions?${params}`,
+    `/accounts/transactions?${new URLSearchParams(params as Record<string, string>).toString()}`,
     {
       credentials: 'include',
     },

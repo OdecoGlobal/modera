@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { requireMerchant } from '@/middlewares/auth.middleware';
+import { TransactionStatusType } from '@/types/account';
 import { formatApiError } from '@/utils/format-api-error';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -22,8 +23,8 @@ export async function GET(req: NextRequest) {
       prisma.transaction.findMany({
         where: {
           merchantId: merchant.id,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ...(status ? { status: status as any } : {}),
+
+          ...(status ? { status: status as TransactionStatusType } : {}),
         },
         orderBy: { createdAt: 'desc' },
         skip,

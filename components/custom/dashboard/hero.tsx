@@ -27,7 +27,6 @@ const AccountCard = () => {
       <EmptyState description="No account found. Please contact support" />
     );
   }
-  console.log('account data', data);
   const {
     data: { virtualAccount: account, balance, merchant },
   } = data;
