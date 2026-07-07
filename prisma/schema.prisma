@@ -1,0 +1,263 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  role          String    @default("user")
+  banned        Boolean?  @default(false)
+  banReason     String?
+  banExpires    DateTime?
+  sessions      Session[]
+  accounts      Account[]
+  merchant      Merchant?
+
+  @@map("user")
+}
+
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model Merchant {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String          @unique
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessName   String
+  businessEmail  String
+  isAdmin        Boolean         @default(false)
+  createdAt      DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime        @updatedAt
+  customers      Customer[]
+  virtualAccount VirtualAccount?
+  apiKey         ApiKey?
+  auditLogs      AuditLog[]
+  kycEvents      KycEvent[]
+  transactions   Transaction[]
+
+  @@map("merchant")
+}
+
+model Customer {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId     String          @db.Uuid
+  merchant       Merchant        @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  name           String
+  email          String?
+  phone          String?
+  kycTier        KycTierEnum     @default(unverified)
+  createdAt      DateTime        @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime        @updatedAt
+  virtualAccount VirtualAccount?
+  transactions   Transaction[]
+  kycSubmissions KycSubmission[]
+  kycEvents      KycEvent[]
+
+  @@map("customer")
+}
+
+model VirtualAccount {
+  id                String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId        String               @unique @db.Uuid
+  merchant          Merchant             @relation(fields: [merchantId], references: [id], onDelete: Restrict)
+  customerId        String?              @unique @db.Uuid
+  customer          Customer?            @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  type              VirtualAccountType   @default(customer)
+  accountRef        String               @unique
+  bankAccountNumber String               @unique
+  bankAccountName   String
+  bankName          String
+  bvn               String?
+  accountHolderId   String?
+  status            VirtualAccountStatus @default(active)
+  closedAt          DateTime?
+  expired           Boolean              @default(false)
+  createdAt         DateTime             @default(now()) @db.Timestamp(6)
+  transactions      Transaction[]
+
+  @@map("virtual_account")
+}
+
+model Transaction {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId       String?           @db.Uuid
+  merchant         Merchant?         @relation(fields: [merchantId], references: [id], onDelete: Restrict)
+  customerId       String?           @db.Uuid
+  customer         Customer?         @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  virtualAccountId String?           @db.Uuid
+  virtualAccount   VirtualAccount?   @relation(fields: [virtualAccountId], references: [id], onDelete: Restrict)
+  type             String            @default("credit")
+  notes            String?
+  amount           Float
+  currency         String            @default("NGN")
+  reference        String            @unique
+  payerName        String?
+  payerBank        String?
+  narration        String?
+  status           TransactionStatus @default(success)
+  createdAt        DateTime          @default(now()) @db.Timestamp(6)
+
+  @@map("transaction")
+}
+
+model WebhookLog {
+  id          String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  requestId   String?             @unique
+  eventType   String
+  payload     Json
+  signature   String
+  processed   Boolean             @default(false)
+  processedAs WebhookProcessedAs?
+  createdAt   DateTime            @default(now()) @db.Timestamp(6)
+
+  @@map("webhook_log")
+}
+
+model ApiKey {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId String   @unique @db.Uuid
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  keyHash    String   @unique
+  prefix     String
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+
+  @@map("api_key")
+}
+
+model AuditLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId String   @db.Uuid
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Restrict)
+  action     String
+  entity     String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+
+  @@map("audit_log")
+}
+
+model KycEvent {
+  id         String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  merchantId String?     @db.Uuid
+  merchant   Merchant?   @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  customerId String?     @db.Uuid
+  customer   Customer?   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  fromTier   KycTierEnum
+  toTier     KycTierEnum
+  createdAt  DateTime    @default(now()) @db.Timestamp(6)
+
+  @@map("kyc_event")
+}
+
+model KycSubmission {
+  id              String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerId      String              @db.Uuid
+  customer        Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  merchantId      String              @db.Uuid
+  bvn             String?
+  nin             String?
+  dateOfBirth     String?
+  address         String?
+  tier            KycTierEnum         @default(unverified)
+  status          KycSubmissionStatus @default(pending)
+  rejectionReason String?
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  createdAt       DateTime            @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime            @updatedAt
+
+  @@map("kyc_submission")
+}
+
+enum KycTierEnum {
+  unverified
+  basic
+  verified
+}
+
+enum KycSubmissionStatus {
+  pending
+  approved
+  rejected
+}
+
+enum WebhookProcessedAs {
+  success
+  misdirected
+  duplicate
+  flagged
+  ignored
+}
+
+enum TransactionStatus {
+  success
+  misdirected
+  flagged
+}
+
+enum VirtualAccountStatus {
+  active
+  suspended
+  closed
+}
+
+enum VirtualAccountType {
+  merchant
+  customer
+}
