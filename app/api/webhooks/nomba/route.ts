@@ -33,6 +33,8 @@ function generateSignature(
 }
 
 export async function POST(req: NextRequest) {
+  console.log('WEBHOOK JIT!!');
+
   const rawBody = await req.text();
   const signature = req.headers.get('x-nomba-signature');
   let parsedPayload: any;
@@ -109,6 +111,7 @@ export async function POST(req: NextRequest) {
   const va = await prisma.virtualAccount.findUnique({
     where: { accountRef },
   });
+  console.log('VA', va);
 
   if (!va || va.status === 'closed' || va.status === 'suspended') {
     try {
