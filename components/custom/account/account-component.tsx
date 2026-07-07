@@ -14,6 +14,7 @@ import RenameAccountForm from './rename-account';
 import CardLoading from '../loading/card-loading';
 import ConfirmationDialog from '../confirmation-dialog';
 import BackButton from '../back-btn';
+import EmptyState from '../states/empty-state';
 
 const AccountSettingComponent = () => {
   const { data, isPending } = useGetMyAccount();
@@ -24,7 +25,7 @@ const AccountSettingComponent = () => {
     return <CardLoading />;
   }
   const account = data?.data.virtualAccount;
-  if (!account) return null;
+  if (!account) return <EmptyState />;
   const isClosed = false;
 
   return (

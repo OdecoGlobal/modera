@@ -15,6 +15,7 @@ import ErrorState from '../states/error-state';
 import { formatDateTime } from '@/utils/format-date';
 import { cn } from '@/lib/utils';
 import { formatAmount } from '@/utils';
+const headers = ['Customers', 'Type', 'Amount', 'Status', 'Date'];
 
 const MyTransactionsTable = ({ slice }: { slice?: number }) => {
   const { data, isPending, isError, error, refetch } = useGetMyTransactions();
@@ -22,7 +23,7 @@ const MyTransactionsTable = ({ slice }: { slice?: number }) => {
   if (isPending) {
     return (
       <Table>
-        <TableSkeleton />
+        <TableSkeleton headers={headers} />
       </Table>
     );
   }
@@ -33,7 +34,7 @@ const MyTransactionsTable = ({ slice }: { slice?: number }) => {
   if (!data || data.data.length === 0) {
     return (
       <Table>
-        <EmptyTable />
+        <EmptyTable headers={headers} />
       </Table>
     );
   }
@@ -45,7 +46,7 @@ const MyTransactionsTable = ({ slice }: { slice?: number }) => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Payer&apos;s Name</TableHead>
+          <TableHead>Customer</TableHead>
           <TableHead>Payer&apos;s Bank</TableHead>
           <TableHead>Date</TableHead>
           <TableHead>Transaction Status</TableHead>

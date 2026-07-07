@@ -22,14 +22,13 @@ import { DEFAULT_PROFILE } from '@/constant';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { UnfoldMoreIcon } from '@hugeicons/core-free-icons';
 import LogoutButton from '../logout';
-// import { getImageUrl } from '@/utils/cloudinary';
 
 const SidebarUserMenu = () => {
   const { data } = authClient.useSession();
   if (!data) return null;
 
   const { user } = data;
-  //   const image = user.image ? getImageUrl(user.image) : DEFAULT_PROFILE;
+
   const image = DEFAULT_PROFILE;
   const email = user.email;
   const name = user.name;

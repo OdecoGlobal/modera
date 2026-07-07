@@ -15,7 +15,9 @@ export async function getMyTransactions(params?: TransactionQuery) {
 interface MyTransactionStats {
   misdirectedCount: number;
   total: number;
+  flagged: number;
   totalThisMonth: number;
+  totalCustomers: number;
 }
 export async function getMyTransactionStats() {
   const res = await fetchApi<ApiResponse<MyTransactionStats>>(

@@ -1,8 +1,11 @@
 export const fromKobo = (amount: number): number => amount / 100;
 export const formatAmount = (amount: number): string =>
   new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(
-    fromKobo(amount),
+    amount,
   );
+
+export const formatNumber = (amount: number): string =>
+  new Intl.NumberFormat('en-NG', { style: 'decimal' }).format(amount);
 export const toKobo = (amount: number): number => Math.round(amount * 100);
 
 export function formatString(text: string) {
