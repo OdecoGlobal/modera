@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const token = await getNombaToken();
 
     const nombaRes = await fetch(
-      `${process.env.NOMBA_BASE_URL}/v1/accounts/virtual`,
+      `${process.env.NOMBA_BASE_URL}/v1/accounts/virtual/${process.env.NOMBA_SUB_ACCOUNT_ID}`,
       {
         method: 'POST',
         headers: {

@@ -51,12 +51,12 @@ export async function fetchNombaTransactions(
   });
 
   const res = await fetch(
-    `${process.env.NOMBA_BASE_URL}/v1/transactions/accounts?${params}`,
+    `${process.env.NOMBA_BASE_URL}/v1/transactions/accounts/${process.env.NOMBA_SUB_ACCOUNT_ID}?${params}`,
     {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        accountId: process.env.NOMBA_PARENT_ACC_ID!,
+        accountId: process.env.NOMBA_ACCOUNT_ID!,
       },
     },
   );
