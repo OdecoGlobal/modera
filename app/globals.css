@@ -52,7 +52,7 @@
 }
 
 :root {
-  --brand-primary: #0066f6;
+  --brand-primary: #ffc005;
   --brand-secondary: #16be81;
 
   --background: oklch(1 0 0);
@@ -181,11 +181,42 @@
     @apply bg-background mr-1;
   }
 
+  .glass-card {
+    @apply rounded-2xl border border-white/6 bg-white/2 transition-colors hover:border-white/12;
+  }
+  .btn-pill-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-brand-primary px-6 py-3.5 font-semibold text-black shadow-[0_8px_32px_rgba(255,192,5,0.2)] transition-all hover:bg-brand-primary/90;
+  }
+  .btn-pill-secondary {
+    @apply rounded-full border border-muted-foreground px-6 py-3.5 font-semibold text-muted-foreground transition-all hover:border-muted-foreground/80 hover:text-muted-foreground/80;
+  }
+
+  .gradient-text-brand {
+    @apply bg-linear-to-r from-[#FFC005] via-[#ffaa00] to-[#ff9500] bg-clip-text text-transparent;
+  }
+
   .swagger-wrapper .swagger-ui .topbar {
-    display: none; /* hide the default Swagger topbar */
+    display: none;
   }
 
   .swagger-wrapper .swagger-ui {
     font-family: var(--font-sans);
+  }
+  .glow-top {
+    background: radial-gradient(
+      ellipse at top,
+      rgba(255, 192, 5, 0.08) 0%,
+      transparent 50%
+    );
+    pointer-events: none;
+  }
+
+  .glow-center {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 192, 5, 0.05) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
   }
 }

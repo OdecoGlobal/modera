@@ -6,10 +6,7 @@ import ErrorState from '../states/error-state';
 import EmptyState from '../states/empty-state';
 import { formatDateTime } from '@/utils/format-date';
 import { formatAmount, getGreeting } from '@/utils';
-import AccountStatusBadge from './status-bagde';
 import CopyText from '../copy-text';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 const AccountCard = () => {
   const { data, isPending, isError, error, refetch } = useGetMyAccount();
@@ -30,44 +27,35 @@ const AccountCard = () => {
       <EmptyState description="No account found. Please contact support" />
     );
   }
+  console.log('account data', data);
   const {
-    data: { virtualAccount: account, balance },
+    data: { virtualAccount: account, balance, merchant },
   } = data;
   return (
     <>
       <header className="flex-between">
         <div>
           <h1 className="h3-bold capitalize">
-            Hello {account.bankAccountName.toLowerCase().split(' ')[0]}
+            Hello {merchant.businessName.toLowerCase().split(' ')[0]}
           </h1>
           <p className="text-sm text-muted-foreground">
             {getGreeting()}, are you ready to transact?
           </p>
         </div>
 
-        {account.user.kycTier !== 'verified' && (
-          <Button
-            asChild
-            className="text-white bg-brand-primary hover:bg-brand-primary/75"
-          >
-            <Link href="/settings/kyc">
-              Upgrade to tier {account.user.kycTier === 'unverified' ? 2 : 3}
-            </Link>
-          </Button>
-        )}
         {/* <AccountStatusBadge status={account.status} /> */}
       </header>
 
       <div
-        className="rounded-2xl p-6 flex flex-col justify-between min-h-50 relative overflow-hidden space-y-3"
-        style={{
-          background:
-            'linear-gradient(135deg, var(--brand-primary) 0%, #0044cc 100%)',
-          color: '#fff',
-        }}
+        className="rounded-2xl p-6 flex flex-col justify-between min-h-50 relative overflow-hidden space-y-3 bg-brand-primary text-black"
+        // style={{
+        //   background:
+        //     'linear-gradient(135deg, var(--brand-primary) 0%, #0044cc 100%)',
+        //   color: '#fff',
+        // }}
       >
         <div className="ml-auto">
-          <AccountStatusBadge status={account.status} />
+          {/* <AccountStatusBadge status={account.status} /> */}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div className="capitalize">
@@ -91,9 +79,7 @@ const AccountCard = () => {
           <p className="flex flex-col items-start gap-0.5 capitalize">
             <span className="text-sm font-medium opacity-70">Bank Name</span>
 
-            <span className="text-white text-base font-bold">
-              {account.bankName}
-            </span>
+            <span className="text-base font-bold">{account.bankName}</span>
           </p>
           <div className="text-left">
             <p className="text-xs opacity-70 uppercase  mb-1">
@@ -104,18 +90,6 @@ const AccountCard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="capitalize">
-            <p className="text-sm font-medium opacity-70">Kyc Tier </p>
-
-            <p className="font-bold">
-              Tier{' '}
-              {account.user.kycTier === 'unverified'
-                ? 1
-                : account.user.kycTier === 'basic'
-                  ? 2
-                  : 3}
-            </p>
-          </div>
           <div className="capitalize">
             <p className="text-sm font-medium opacity-70">Account Since </p>
 

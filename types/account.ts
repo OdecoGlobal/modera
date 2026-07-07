@@ -26,18 +26,35 @@ export type TransactionType = {
   virtualAccountId: string;
 };
 
+export type MerchantType = {
+  businessName: string;
+  businessEmail: string;
+  id: string;
+  isAdmin: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type VirtualAccountType = {
+  accountHolderId: string;
   id: string;
   bankAccountNumber: string;
   bankAccountName: string;
   bankName: string;
   accountRef: string;
-  status: AccountStatusType;
+  bvn: string;
+  closedAt: string | null;
+  customerId: string;
+  expired: boolean;
+  merchantId: string;
+  type: 'merchant' | 'customer';
+  // status: AccountStatusType;
   createdAt: string;
-  balance: number;
-  user: {
-    kycTier: KycTierType;
-  };
+  // balance: number;
+  // user: {
+  //   kycTier: KycTierType;
+  // };
 };
 
 export type AccountNameType = z.infer<typeof accountNameSchema>;

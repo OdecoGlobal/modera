@@ -25,7 +25,7 @@ const AccountSettingComponent = () => {
   }
   const account = data?.data.virtualAccount;
   if (!account) return null;
-  const isClosed = account.status === 'closed';
+  const isClosed = false;
 
   return (
     <div className="space-y-6">

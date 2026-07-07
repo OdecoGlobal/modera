@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { getNombaToken } from '@/lib/nomba';
+import { formatApiError } from '@/utils/format-api-error';
 
 export async function POST(req: NextRequest) {
   try {
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
 
       parentAccountRef = merchantVA.accountRef;
     }
+    const token = await getNombaToken();
 
     const nombaRes = await fetch(
       `${process.env.NOMBA_BASE_URL}/v1/accounts/virtual`,
@@ -61,7 +63,7 @@ export async function POST(req: NextRequest) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${await getNombaToken()}`,
+          Authorization: `Bearer ${token}`,
           accountId: process.env.NOMBA_ACCOUNT_ID!,
           'X-Idempotent-key': accountRef,
         },
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
     );
 
     const nombaData = await nombaRes.json();
+    console.log('Nomba provision response:', nombaData);
 
     if (nombaData.code !== '00') {
       return NextResponse.json(
@@ -112,9 +115,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: virtualAccount }, { status: 201 });
   } catch (error) {
     console.error('Provision error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 },
-    );
+    return formatApiError(error);
   }
 }

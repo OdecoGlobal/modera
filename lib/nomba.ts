@@ -17,9 +17,20 @@ export async function getNombaToken() {
       client_secret: process.env.NOMBA_CLIENT_SECRET,
     }),
   });
+
   const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to fetch Nomba token: ${data.message || res.statusText}`,
+    );
+  }
+  const token = data?.data?.access_token;
+  if (!token) {
+    throw new Error('Nomba returned no access_token');
+  }
   tokenCache = {
-    token: data.access_token,
+    token,
     expiresAt: Date.now() + REFRESH_TIME_MS,
   };
   return tokenCache.token;
@@ -31,7 +42,6 @@ export async function fetchNombaTransactions(
   cursor?: string,
 ) {
   const token = await getNombaToken();
-  console.log('NOMBA', token);
 
   const params = new URLSearchParams({
     startDate,
@@ -59,5 +69,37 @@ export async function fetchNombaTransactions(
   return {
     results: data.data.results || [],
     cursor: data.data.cursor ?? null,
+  };
+}
+
+export async function createVirtualAccount(
+  accountName: string,
+  accountRef: string,
+) {
+  const token = await getNombaToken();
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/accounts/provision`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        accountId: process.env.NOMBA_ACCOUNT_ID!,
+      },
+      body: JSON.stringify({
+        accountRef,
+        accountName,
+        currency: 'NGN',
+      }),
+    },
+  );
+  const data = await res.json();
+  if (data.code !== '00') throw new Error(`Nomba error: ${data.description}`);
+
+  return {
+    accountRef,
+    bankAccountNumber: data.data.accountNumber,
+    bankAccountName: data.data.accountName,
+    bankName: data.data.bankName,
   };
 }

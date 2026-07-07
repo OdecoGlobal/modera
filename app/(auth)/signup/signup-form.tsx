@@ -64,7 +64,7 @@ const SignupForm = ({ callbackUrl }: { callbackUrl?: string }) => {
             toast.success('Success', {
               description: 'Registration successful!',
             });
-            router.replace(callbackUrl || '/');
+            router.replace(callbackUrl || '/dashboard/merchant');
           },
           onError: ctx => {
             toast.error('Error', {

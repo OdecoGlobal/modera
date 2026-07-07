@@ -5,3 +5,4 @@ export const authClient = createAuthClient({
   baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
   plugins: [adminClient()],
 });
+export type SessionUser = typeof authClient.$Infer.Session.user;

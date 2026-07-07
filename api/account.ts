@@ -1,5 +1,6 @@
 import {
   AccountNameType,
+  MerchantType,
   ReasonType,
   VirtualAccountType,
 } from '@/types/account';
@@ -9,6 +10,7 @@ import { ApiResponse } from '@/types';
 interface GetMyAccoutType {
   balance: number;
   virtualAccount: VirtualAccountType;
+  merchant: MerchantType;
 }
 
 export async function getMyAccount() {
