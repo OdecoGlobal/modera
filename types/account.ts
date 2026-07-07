@@ -1,5 +1,5 @@
 import z from 'zod';
-import { KycTierType } from '.';
+// import { KycTierType } from '.';
 import { accountNameSchema, reasonSchema } from '@/schema/account.schema';
 
 export type TransactionQuery = {
@@ -10,6 +10,7 @@ export type AccountStatusType = 'active' | 'suspended' | 'closed';
 
 type TransactionTypeUnion = 'credit' | 'misdirected';
 type TransactionStatusUnion = 'credit' | 'misdirected';
+export type TransactionStatusType = 'success' | 'misdirected' | 'flagged';
 
 export type TransactionType = {
   id: string;

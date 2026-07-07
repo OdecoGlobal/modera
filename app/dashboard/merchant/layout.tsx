@@ -17,30 +17,30 @@ const items = [
 
   {
     title: 'My History',
-    href: '/history',
+    href: '/dashboard/merchant/history',
     icon: TransactionHistoryIcon,
   },
 
   {
     title: 'Settings',
-    href: '/settings',
+    href: '/dashboard/merchant/settings',
     icon: AccountSetting01Icon,
     subItems: [
       {
         title: 'Account Setting',
-        href: '/settings/account',
+        href: '/dashboard/merchant/settings/account',
         icon: AccountSetting01Icon,
       },
       {
         title: 'Kyc Verification',
-        href: '/settings/kyc',
+        href: '/dashboard/merchant/settings/kyc',
         icon: IdVerifiedIcon,
       },
     ],
   },
   {
     title: 'Developer Setting',
-    href: '/api-key',
+    href: '/dashboard/merchant/settings/developer',
     icon: DeviceAccessIcon,
   },
 ];
