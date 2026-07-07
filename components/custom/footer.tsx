@@ -24,7 +24,7 @@ const Footer = () => {
             Docs
           </Link>
           <Link
-            href="/dashboard/merchant"
+            href="/dashboard"
             className="transition-colors hover:text-muted-foreground/75"
           >
             Demo

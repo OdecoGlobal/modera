@@ -31,7 +31,7 @@ export default async function Nav() {
         <div className="hidden lg:flex lg:justify-between lg:items-center lg:gap-6">
           <NavLinks />
           <Button asChild variant="brand">
-            <Link href="/dashboard/merchant">Launch Demo</Link>
+            <Link href="/dashboard">Launch Demo</Link>
           </Button>
         </div>
         <div className="gap-4 flex-start">

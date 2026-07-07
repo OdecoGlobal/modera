@@ -31,7 +31,7 @@ const MobileNav = () => {
         <div className="flex flex-col items-center gap-4 px-4 mt-20">
           <NavLinks onNavigate={closeSheet} />
           <Button asChild variant="brand">
-            <Link href="/dashboard/merchant">Launch Demo</Link>
+            <Link href="/dashboard">Launch Demo</Link>
           </Button>
         </div>
       </SheetContent>

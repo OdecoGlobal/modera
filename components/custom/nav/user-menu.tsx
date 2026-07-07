@@ -58,10 +58,7 @@ const UserMenu = ({ user }: { user: SessionUser }) => {
 
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <Link
-                href="/dashboard/merchant"
-                className="w-full gap-2 flex-start"
-              >
+              <Link href="/dashboard" className="w-full gap-2 flex-start">
                 <HugeiconsIcon icon={UserCircle02Icon} /> My Account
               </Link>
             </DropdownMenuItem>

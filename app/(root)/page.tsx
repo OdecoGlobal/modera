@@ -86,7 +86,7 @@ export default function LandingPage() {
             unified API. Launch your fintech product in days, not months.
           </p>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="/dashboard/merchant" className="btn-pill-primary">
+            <Link href="/dashboard" className="btn-pill-primary">
               View Live Demo
               <ArrowRight size={16} />
             </Link>
@@ -189,7 +189,7 @@ export default function LandingPage() {
                 Explore the interactive demo to see how Nomba handles every step
                 of the banking flow.
               </p>
-              <Link href="/dashboard/merchant" className="btn-pill-primary">
+              <Link href="/dashboard" className="btn-pill-primary">
                 Launch Interactive Demo
                 <ExternalLink size={16} />
               </Link>
