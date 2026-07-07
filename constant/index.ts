@@ -1,4 +1,4 @@
-export const APP_NAME = process.env.APP_NAME ?? 'Nomba Test';
+export const APP_NAME = process.env.APP_NAME ?? 'VirtualStack';
 export const APP_LOGO = '/images/logo.png';
 export const APP_DESCRIPTION =
   process.env.APP_DESCRIPTION ??

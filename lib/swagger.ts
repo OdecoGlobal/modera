@@ -4,17 +4,17 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'nomba-dva API',
+      title: 'VirtualStack API',
       version: '2.0.0',
       description:
         'B2B infrastructure platform — merchants integrate via API key to provision dedicated virtual accounts for their customers, powered by Nomba.',
       contact: {
-        name: 'nomba-dva',
-        url: 'https://nomba-dva.vercel.app',
+        name: 'VirtualStack',
+        url: 'https://modera.odeco.dev',
       },
     },
     servers: [
-      { url: 'https://nomba-dva.vercel.app', description: 'Production' },
+      { url: 'https://modera.odeco.dev', description: 'Production' },
       { url: 'http://localhost:3000', description: 'Local development' },
     ],
     components: {
@@ -23,7 +23,7 @@ const options: swaggerJsdoc.Options = {
           type: 'apiKey',
           in: 'header',
           name: 'x-api-key',
-          description: 'API key prefixed with ndva_ — generate from dashboard',
+          description: 'API key prefixed with nva_ — generate from dashboard',
         },
         SessionAuth: {
           type: 'apiKey',
