@@ -10,11 +10,11 @@ const options: swaggerJsdoc.Options = {
         'B2B infrastructure platform — merchants integrate via API key to provision dedicated virtual accounts for their customers, powered by Nomba.',
       contact: {
         name: 'VirtualStack',
-        url: 'https://modera.odeco.dev',
+        url: 'https://virtualstack.odeco.dev',
       },
     },
     servers: [
-      { url: 'https://modera.odeco.dev', description: 'Production' },
+      { url: 'https://virtualstack.odeco.dev', description: 'Production' },
       { url: 'http://localhost:3000', description: 'Local development' },
     ],
     components: {

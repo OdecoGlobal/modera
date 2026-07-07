@@ -22,22 +22,21 @@ export default async function Nav() {
           <MobileNav />
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-[#FFC005] to-[#ff9500]">
+          {/* <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-[#FFC005] to-[#ff9500]">
             <span className="text-sm font-bold text-black">V</span>
-          </div>
+          </div> */}
           <span className="text-3xl font-bold">{APP_NAME}</span>
         </div>
 
         <div className="hidden lg:flex lg:justify-between lg:items-center lg:gap-6">
           <NavLinks />
+          <Button asChild variant="brand">
+            <Link href="/dashboard/merchant">Launch Demo</Link>
+          </Button>
         </div>
         <div className="gap-4 flex-start">
           <ModeToggle />
           {user && <UserMenu user={user} />}
-
-          <Button asChild variant="brand">
-            <Link href="/dashboard/merchant">Launch Demo</Link>
-          </Button>
         </div>
       </div>
     </nav>
