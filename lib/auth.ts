@@ -9,6 +9,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
+  baseUrl: process.env.BETTER_AUTH_URL || 'https://virtualstack.odeco.dev',
   session: {
     cookieCache: { enabled: true, maxAge: 5 * 60 },
   },
