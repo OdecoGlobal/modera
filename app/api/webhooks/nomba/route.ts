@@ -73,6 +73,8 @@ export async function POST(req: NextRequest) {
       process.env.NOMBA_WEBHOOK_SECRET,
       timestamp,
     );
+    console.log('COMPUTED', computed);
+
     if (computed !== signature) {
       console.error('Signature mismatch', { computed, received: signature });
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
@@ -85,6 +87,8 @@ export async function POST(req: NextRequest) {
     'virtual_account.funded',
     'transaction.success',
   ];
+
+  console.log('DATA', data);
 
   if (!HANDLED_EVENTS.includes(event_type)) {
     await prisma.webhookLog.updateMany({

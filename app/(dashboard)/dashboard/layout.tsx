@@ -2,8 +2,8 @@ import AppSidebar from '@/components/custom/sidebar/app-sidebar';
 import SidebarShell from '@/components/custom/sidebar/sidebar-shell';
 import {
   AccountSetting01Icon,
+  DashboardSquare02Icon,
   DeviceAccessIcon,
-  Home01Icon,
   IdVerifiedIcon,
   TransactionHistoryIcon,
 } from '@hugeicons/core-free-icons';
@@ -11,8 +11,8 @@ import {
 const items = [
   {
     title: 'Home',
-    href: '/',
-    icon: Home01Icon,
+    href: '/dashboard',
+    icon: DashboardSquare02Icon,
   },
 
   {
